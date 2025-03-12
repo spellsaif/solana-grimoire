@@ -3,12 +3,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Badge } from "@/components/ui/badge"
 import type { Instruction } from "@/lib/types"
+import { useIDLStore } from "@/store/idl-store"
 
 interface InstructionsViewProps {
   instructions: Instruction[]
 }
 
-const InstructionsView = ({ instructions }: InstructionsViewProps) => {
+const InstructionsView = () => {
+    const instructions = useIDLStore((state) => state.idlData.instructions)
   return (
     <Card>
       <CardHeader>
