@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectTrigger, SelectContent, SelectItem } from "@/components/ui/select";
 import { UploadCloud, Moon, Sun } from "lucide-react";
 
+import {parseIDL} from "@/lib/parse-idl"
 export default function EnterOrUploadIDL() {
   const [programId, setProgramId] = useState("");
   const [idlData, setIdlData] = useState(null);
@@ -81,7 +82,7 @@ export default function EnterOrUploadIDL() {
             <SelectContent>
               <SelectItem value="Devnet">Devnet</SelectItem>
               <SelectItem value="Mainnet">Mainnet</SelectItem>
-              <SelectItem value="Localnet">Mainnet</SelectItem>
+              <SelectItem value="Localnet">Localnet</SelectItem>
 
             </SelectContent>
           </Select>
@@ -108,7 +109,7 @@ export default function EnterOrUploadIDL() {
         </CardContent>
       </Card>
 
-      {idlData && (
+      {/* {idlData && (
         <Card
           className={`w-full max-w-2xl p-8 mt-8 shadow-2xl rounded-2xl border transition-all duration-300 ${
             darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-purple-400"
@@ -133,7 +134,7 @@ export default function EnterOrUploadIDL() {
             </p>
           </CardContent>
         </Card>
-      )}
+      )} */}
     </div>
   );
 }
