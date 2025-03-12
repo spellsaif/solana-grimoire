@@ -8,11 +8,15 @@ import { Select, SelectTrigger, SelectContent, SelectItem } from "@/components/u
 import { UploadCloud, Moon, Sun } from "lucide-react";
 
 import {parseIDL} from "@/lib/parse-idl"
+import { useIDLStore } from "@/store/idl-store";
+import { useRouter } from "next/navigation";
 export default function EnterOrUploadIDL() {
   const [programId, setProgramId] = useState("");
-  const [idlData, setIdlData] = useState(null);
   const [connection, setConnection] = useState<'Devnet' | 'Mainnet' | 'Localnet'>("Devnet");
   const [darkMode, setDarkMode] = useState(false);
+
+  const setIdlData = useIDLStore((state) => state.setIdlData);
+  const router = useRouter();
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -23,6 +27,7 @@ export default function EnterOrUploadIDL() {
       try {
         const idl = JSON.parse(e.target.result);
         setIdlData(parseIDL(idl));
+        router.push("/visualize");
       } catch (err) {
         console.error("Invalid IDL file", err);
       }
