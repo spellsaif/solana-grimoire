@@ -86,6 +86,7 @@ export default function EnterOrUploadIDL() {
 
             </SelectContent>
           </Select>
+          <p className="text-center text-purple-600">Or</p>
           <label
             className={`flex items-center gap-3 p-4 border-2 border-dashed rounded-lg cursor-pointer hover:scale-105 transition-all shadow-lg ${
               darkMode
@@ -95,7 +96,7 @@ export default function EnterOrUploadIDL() {
           >
             <UploadCloud size={28} className={darkMode ? "text-gray-300" : "text-purple-600"} />
             <span className={darkMode ? "text-gray-300 font-semibold" : "text-purple-700 font-semibold"}>
-              Upload IDL JSON
+              Upload IDL
             </span>
             <input type="file" accept=".json" onChange={handleFileUpload} className="hidden" />
           </label>
