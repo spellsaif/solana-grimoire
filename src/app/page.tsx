@@ -1,11 +1,7 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import EnterOrUploadIDL from "@/components/enter-or-upload-idl";
 
 export default function Home() {
   return (
-    <div>
-      Solana Grimoire
-      <Button>Visualize</Button>
-      </div>
+    <EnterOrUploadIDL />
   );
 }
