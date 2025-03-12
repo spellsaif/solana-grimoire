@@ -29,13 +29,19 @@ export function parseIDL(idl: any) {
         discriminator: acc.discriminator,
       })) || [],
   
-      pdas: idl.instructions.flatMap((inst: any) =>
-        inst.accounts
-          .filter((acc: any) => acc.pda)
-          .map((acc: any) => ({
-            name: acc.name,
-            seeds: acc.pda.seeds.map((seed: any) => seed.kind),
-          }))
+      pdas: Array.from(
+        new Map(
+          idl.instructions
+            .flatMap((inst: any) =>
+              inst.accounts
+                .filter((acc: any) => acc.pda)
+                .map((acc: any) => ({
+                  name: acc.name,
+                  seeds: acc.pda.seeds.map((seed: any) => {seed.kind, seed.value}),
+                }))
+            )
+            .map((pda) => [pda.name, pda]) // Use Map to ensure uniqueness by name
+        ).values()
       ),
   
       systemPrograms: idl.instructions.flatMap((inst: any) =>
