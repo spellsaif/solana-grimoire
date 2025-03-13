@@ -1,37 +1,36 @@
 "use client"
 
 import { useState } from "react"
-// import { ThemeProvider } from "@/components/theme-provider"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useIDLStore } from "@/store/idl-store"
 import InstructionsViewTab from "@/components/instruction-view-tab"
 import OverviewDiagram from "@/components/overview-diagram"
+import StateView from "@/components/state-view"
+import ProgramsView from "@/components/programs"
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState("visualizer")
+  const [activeTab, setActiveTab] = useState("overview")
   const idlData= useIDLStore((state) => state.idlData); 
 
   return (
-    // <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-      <main className="min-h-screen bg-background bg-gradient-to-br from-indigo-100 via-pink-200 to-purple-300 text-gray-900">
+      <main className="min-h-screen transition-all duration-300 bg-gradient-to-br from-indigo-100 via-pink-200 to-purple-300 text-gray-900">
         <div className="container mx-auto py-6 px-4 sm:px-6">
           <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
             <div>
-              <h1 className="text-3xl text-purple-600 font-bold tracking-tight text-foreground">Solana Grimoire</h1>
-              <p className="text-muted-foreground mt-1">
+              <h1 className="text-3xl text-purple-600 font-bold tracking-tight">✨ Solana Grimoire 🌸</h1>
+              <p className="text-black mt-1 ml-12">
                 {idlData.name} - {idlData.version}
               </p>
             </div>
           </header>
 
-          <Tabs defaultValue="visualizer" value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-            <TabsList className="grid grid-cols-2 md:grid-cols-7 gap-2 text-purple-600  opacity-90 border-purple-600">
+          <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+            <TabsList className="grid grid-cols-2 md:grid-cols-7 gap-2 text-black  opacity-90">
               <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="accounts">Accounts</TabsTrigger>
+              <TabsTrigger value="states">States</TabsTrigger>
               <TabsTrigger value="instructions">Instructions</TabsTrigger>
-              <TabsTrigger value="relationships">Relationships</TabsTrigger>
               <TabsTrigger value="pdas">PDAs</TabsTrigger>
-              <TabsTrigger value="system-programs">System Programs</TabsTrigger>
+              <TabsTrigger value="programs">Programs</TabsTrigger>
               <TabsTrigger value="token-accounts">Token Accounts</TabsTrigger>
             </TabsList>
 
@@ -39,20 +38,19 @@ export default function Home() {
                 <OverviewDiagram />
             </TabsContent>
 
-            <TabsContent value="accounts" className="space-y-4">
+            <TabsContent value="states" className="space-y-4">
+                <StateView />
             </TabsContent>
 
             <TabsContent value="instructions" className="space-y-4">
               <InstructionsViewTab  />
             </TabsContent>
 
-            <TabsContent value="relationships" className="space-y-4">
-            </TabsContent>
-
             <TabsContent value="pdas" className="space-y-4">
             </TabsContent>
 
-            <TabsContent value="system-programs" className="space-y-4">
+            <TabsContent value="programs" className="space-y-4">
+                <ProgramsView />
             </TabsContent>
 
             <TabsContent value="token-accounts" className="space-y-4">
@@ -61,7 +59,6 @@ export default function Home() {
           </Tabs>
         </div>
       </main>
-    // </ThemeProvider>
   )
 }
 
