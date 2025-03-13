@@ -7,10 +7,17 @@ import InstructionsViewTab from "@/components/instruction-view-tab"
 import OverviewDiagram from "@/components/overview-diagram"
 import StateView from "@/components/state-view"
 import ProgramsView from "@/components/programs"
+import { useRouter } from "next/navigation"
+
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("overview")
   const idlData= useIDLStore((state) => state.idlData); 
+  const router = useRouter();
+
+  if (!idlData) {
+    router.push("/");
+  }
 
   return (
       <main className="min-h-screen transition-all duration-300 bg-gradient-to-br from-indigo-100 via-pink-200 to-purple-300 text-gray-900">
