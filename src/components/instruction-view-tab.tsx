@@ -22,7 +22,7 @@ const InstructionsViewTab = () => {
       <CardContent>
         <Tabs defaultValue={instructions[0]?.name} className="w-full">
           <TabsList className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full  h-full">
-            {instructions.map((instruction, index) => (
+            {instructions.map((instruction:Instruction, index: number) => (
               <TabsTrigger key={index} value={instruction.name} className="px-4 py-2 rounded-md">
                 {instruction.name}
               </TabsTrigger>
