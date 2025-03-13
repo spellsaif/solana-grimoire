@@ -1,3 +1,5 @@
+import { Instruction, InstructionAccount, PDA } from "./types";
+
 export function parseIDL(idl: any) {
   if (!idl || typeof idl !== "object") {
     throw new Error("Invalid IDL format");
@@ -33,7 +35,7 @@ export function parseIDL(idl: any) {
     pdas: Array.from(
       new Map(
         idl.instructions
-          .flatMap((inst: any) =>
+          .flatMap((inst: Instruction) =>
             inst.accounts
               .filter((acc: any) => acc.pda)
               .map((acc: any) => ({
@@ -44,7 +46,7 @@ export function parseIDL(idl: any) {
                 })),
               }))
           )
-          .map((pda) => [pda.name, pda]) // Use Map to ensure uniqueness by name
+          .map((pda:InstructionAccount) => [pda.name, pda]) // Use Map to ensure uniqueness by name
       ).values()
     ),
 

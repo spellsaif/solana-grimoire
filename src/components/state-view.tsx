@@ -3,10 +3,8 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import type { Account, Type } from "@/lib/types";
+import type { Account, Field, Type } from "@/lib/types";
 import { useIDLStore } from "@/store/idl-store";
-import { shallow } from "zustand/shallow";
 
 const StateView = () => {
   // ✅ Fix: Use shallow comparison to prevent excessive re-renders
@@ -20,7 +18,7 @@ const StateView = () => {
   const [activeTab, setActiveTab] = useState(accounts.length > 0 ? accounts[0].name : "");
 
   const getAccountType = (accountName: string) => {
-    return types.find((type) => type.name === accountName);
+    return types.find((type: Type) => type.name === accountName);
   };
 
   const renderFieldType = (fieldType: any) => {
@@ -47,14 +45,14 @@ const StateView = () => {
         ) : (
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="overflow-x-auto flex space-x-2">
-              {accounts.map((account) => (
+              {accounts.map((account: Account) => (
                 <TabsTrigger key={account.name} value={account.name} className="whitespace-nowrap">
                   {account.name}
                 </TabsTrigger>
               ))}
             </TabsList>
 
-            {accounts.map((account) => {
+            {accounts.map((account:Account) => {
               const accountType = getAccountType(account.name);
               return (
                 <TabsContent key={account.name} value={account.name} className="mt-4">
@@ -78,7 +76,7 @@ const StateView = () => {
                               </tr>
                             </thead>
                             <tbody>
-                              {accountType.type.fields.map((field, fieldIndex) => (
+                              {accountType.type.fields.map((field: Field, fieldIndex:number) => (
                                 <tr key={fieldIndex} className="border-t">
                                   <td className="p-2 font-mono">{field.name}</td>
                                   <td className="p-2 font-mono">{renderFieldType(field.type)}</td>

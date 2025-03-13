@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,22 +10,27 @@ import { UploadCloud, Moon, Sun } from "lucide-react";
 import {parseIDL} from "@/lib/parse-idl"
 import { useIDLStore } from "@/store/idl-store";
 import { useRouter } from "next/navigation";
+
+type ConnectionType = 'Devnet' | 'Mainnet' | 'Localnet';
+
 export default function EnterOrUploadIDL() {
   const [programId, setProgramId] = useState("");
-  const [connection, setConnection] = useState<'Devnet' | 'Mainnet' | 'Localnet'>("Devnet");
+  const [connection, setConnection] = useState<ConnectionType>("Devnet");
   const [darkMode, setDarkMode] = useState(false);
 
   const setIdlData = useIDLStore((state) => state.setIdlData);
   const router = useRouter();
 
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
+  const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
+    
     reader.onload = (e) => {
+      if (!e.target?.result) return; 
       try {
-        const idl = JSON.parse(e.target.result);
+        const idl = JSON.parse(e.target.result as string);
         setIdlData(parseIDL(idl));
         router.push("/visualize");
       } catch (err) {
@@ -74,7 +79,8 @@ export default function EnterOrUploadIDL() {
                 : "bg-purple-100 text-gray-900 border-purple-400 focus:ring-purple-500"
             }`}
           />
-          <Select value={connection} onValueChange={setConnection}>
+          
+          <Select value={connection} onValueChange={(value) => setConnection(value as ConnectionType)}>
             <SelectTrigger
               className={`p-3 rounded-lg border shadow-md focus:ring-2 transition-all duration-300 w-full ${
                 darkMode
