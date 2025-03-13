@@ -3,12 +3,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-import type { Instruction } from "@/lib/types"
+import type { Instruction, Arg } from "@/lib/types"
 import { useIDLStore } from "@/store/idl-store"
-
-interface InstructionsViewProps {
-  instructions: Instruction[]
-}
 
 const InstructionsViewTab = () => {
   const instructions = useIDLStore((state) => state.idlData.instructions)
@@ -29,7 +25,7 @@ const InstructionsViewTab = () => {
             ))}
           </TabsList>
           
-          {instructions.map((instruction, index) => (
+          {instructions.map((instruction: Instruction, index:number) => (
             <TabsContent key={index} value={instruction.name} className="p-4 border rounded-md mt-4">
               <div className="space-y-4">
                 <div>
@@ -89,7 +85,7 @@ const InstructionsViewTab = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {instruction.args.map((arg, argIndex) => (
+                          {instruction.args.map((arg: Arg, argIndex: number) => (
                             <tr key={argIndex} className="border-t">
                               <td className="p-2 font-mono">{arg.name}</td>
                               <td className="p-2 font-mono">{arg.type}</td>
