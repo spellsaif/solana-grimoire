@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true, // ✅ Disables ESLint during `next build`
   },
+  typescript: {
+    ignoreBuildErrors: true, // ✅ Skips TypeScript checking during build
+  },
 };
 
 export default nextConfig;

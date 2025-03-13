@@ -8,6 +8,7 @@ import { useTheme } from "next-themes";
 import { ZoomIn, ZoomOut } from "lucide-react";
 import { useIDLStore } from "@/store/idl-store";
 import panzoom from "panzoom";
+import { Instruction } from "@/lib/types";
 
 const OverviewDiagram = () => {
   const instructions = useIDLStore((state) => state.idlData?.instructions || []);
@@ -99,7 +100,7 @@ const OverviewDiagram = () => {
       </CardHeader>
       <CardContent>
         <div ref={containerRef} className="border rounded-md p-4 min-h-[400px] anime-diagram-container overflow-hidden relative">
-          {instructions.map((instruction, index) => (
+          {instructions.map((instruction: Instruction, index:number) => (
             <div key={index} className="mb-8 w-full max-w-full overflow-hidden">
               <div ref={(el) => (diagramRefs.current[index] = el)} className="w-full h-full overflow-hidden"></div>
             </div>
