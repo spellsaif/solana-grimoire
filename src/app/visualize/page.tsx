@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useIDLStore } from "@/store/idl-store"
 import InstructionsViewTab from "@/components/instruction-view-tab"
@@ -15,8 +15,14 @@ export default function Home() {
   const idlData= useIDLStore((state) => state.idlData); 
   const router = useRouter();
 
+  useEffect(() => {
+    if (!idlData) {
+      router.push("/");
+    }
+  }, [idlData, router]); // Runs when idlData changes
+
   if (!idlData) {
-    router.push("/");
+    return null; // Avoid rendering UI while redirecting
   }
 
   return (
