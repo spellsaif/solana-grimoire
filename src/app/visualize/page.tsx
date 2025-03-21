@@ -8,6 +8,7 @@ import OverviewDiagram from "@/components/overview-diagram"
 import StateView from "@/components/state-view"
 import ProgramsView from "@/components/programs"
 import { useRouter } from "next/navigation"
+import ERDiagram from "@/components/er-diagram"
 
 
 export default function Home() {
@@ -48,7 +49,8 @@ export default function Home() {
             </TabsList>
 
             <TabsContent value="overview" className="space-y-4">
-                <OverviewDiagram />
+                {/* <OverviewDiagram /> */}
+                <ERDiagram/>
             </TabsContent>
 
             <TabsContent value="states" className="space-y-4">
