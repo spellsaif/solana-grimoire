@@ -33,19 +33,19 @@ export default function Home() {
             <div>
               <h1 className="text-3xl text-purple-600 font-bold tracking-tight">✨ Solana Grimoire 🌸</h1>
               <p className="text-black mt-1 ml-12">
-                {idlData.name} - {idlData.version}
+                {idlData.name}
               </p>
             </div>
           </header>
 
           <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-            <TabsList className="grid grid-cols-2 md:grid-cols-7 gap-2 text-black  opacity-90">
+            <TabsList className="grid grid-cols-4 md:grid-cols-4 gap-2 text-black  opacity-90">
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="states">States</TabsTrigger>
               <TabsTrigger value="instructions">Instructions</TabsTrigger>
-              <TabsTrigger value="pdas">PDAs</TabsTrigger>
+              {/* <TabsTrigger value="pdas">PDAs</TabsTrigger> */}
               <TabsTrigger value="programs">Programs</TabsTrigger>
-              <TabsTrigger value="token-accounts">Token Accounts</TabsTrigger>
+              {/* <TabsTrigger value="token-accounts">Token Accounts</TabsTrigger> */}
             </TabsList>
 
             <TabsContent value="overview" className="space-y-4">
@@ -61,16 +61,16 @@ export default function Home() {
               <InstructionsViewTab  />
             </TabsContent>
 
-            <TabsContent value="pdas" className="space-y-4">
-            </TabsContent>
+            {/* <TabsContent value="pdas" className="space-y-4">
+            </TabsContent> */}
 
             <TabsContent value="programs" className="space-y-4">
                 <ProgramsView />
             </TabsContent>
 
-            <TabsContent value="token-accounts" className="space-y-4">
+            {/* <TabsContent value="token-accounts" className="space-y-4">
               
-            </TabsContent>
+            </TabsContent> */}
           </Tabs>
         </div>
       </main>
