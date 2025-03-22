@@ -8,10 +8,11 @@ import { useTheme } from "next-themes";
 import { ZoomIn, ZoomOut } from "lucide-react";
 import { useIDLStore } from "@/store/idl-store";
 import panzoom from "panzoom";
-import { Account, Instruction, InstructionAccount } from "@/lib/types";
+import { Instruction, InstructionAccount } from "@/lib/types";
 
 const ERDiagram = () => {
-  const instructions = useIDLStore((state) => state.idlData?.instructions || []);
+  const idlData = useIDLStore((state) => state.idlData);
+  const instructions = idlData?.instructions || [];
   const { theme } = useTheme();
   const [mermaidTheme, setMermaidTheme] = useState<"default" | "dark">("default");
   const diagramRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -23,6 +24,8 @@ const ERDiagram = () => {
   }, [theme]);
 
   useEffect(() => {
+    if (!instructions.length) return; // Avoid unnecessary execution
+    
     mermaid.initialize({
       startOnLoad: true,
       theme: mermaidTheme,
@@ -32,11 +35,19 @@ const ERDiagram = () => {
   }, [mermaidTheme, instructions]);
 
   const renderDiagrams = async () => {
+    if (!Array.isArray(instructions)) {
+      console.error("Invalid instructions data");
+      return;
+    }
+    
     diagramRefs.current.forEach(async (ref, index) => {
-      if (!ref) return;
+      if (!ref || !instructions[index]) return;
+      
       try {
         ref.innerHTML = "";
         const diagram = generateInstructionDiagram(instructions[index]);
+        if (!diagram) throw new Error("Generated diagram is empty");
+        
         const { svg } = await mermaid.render(`diagram-${index}`, diagram);
         ref.innerHTML = svg;
       } catch (error) {
@@ -48,7 +59,9 @@ const ERDiagram = () => {
   };
 
   const applyPanZoom = () => {
-    if (containerRef.current) {
+    if (!containerRef.current) return;
+
+    try {
       const zoom = panzoom(containerRef.current, {
         zoomDoubleClickSpeed: 1,
         maxZoom: 5,
@@ -58,6 +71,7 @@ const ERDiagram = () => {
       });
       setZoomInstance(zoom);
       containerRef.current.style.overflow = "hidden";
+      
       containerRef.current.addEventListener("wheel", (event) => {
         event.preventDefault();
         const scaleFactor = event.deltaY < 0 ? 1.1 : 0.9;
@@ -67,20 +81,24 @@ const ERDiagram = () => {
           scaleFactor
         );
       });
+    } catch (error) {
+      console.error("Error initializing zoom functionality:", error);
     }
   };
 
-  // Generate ER Diagram instead of a flowchart
-  const generateInstructionDiagram = (instruction: any) => {
+  const generateInstructionDiagram = (instruction: Instruction | undefined) => {
+    if (!instruction || !instruction.name || !Array.isArray(instruction.accounts)) {
+      console.warn("Invalid instruction data:", instruction);
+      return "";
+    }
+
     let diagram = "erDiagram\n";
-
-    // Define Instruction as an entity
     diagram += `${instruction.name} \n`;
-
-    instruction.accounts.forEach((account:InstructionAccount) => {
-      // Define Account as an entity
+    
+    instruction.accounts.forEach((account: InstructionAccount) => {
+      if (!account?.name) return; // Skip invalid accounts
+      
       diagram += `${account.name} {\n \n}\n`;
-      // Define relationship (Instruction has many Accounts)
       diagram += `${instruction.name} ||--o| ${account.name} : ""\n`;
     });
 
@@ -101,11 +119,15 @@ const ERDiagram = () => {
       </CardHeader>
       <CardContent>
         <div ref={containerRef} className="border rounded-md p-4 min-h-[400px] anime-diagram-container overflow-hidden relative">
-          {instructions.map((instruction: Instruction, index: number) => (
-            <div key={index} className="mb-8 w-full max-w-full overflow-hidden">
-              <div ref={(el) => (diagramRefs.current[index] = el)} className="w-full h-full overflow-hidden"></div>
-            </div>
-          ))}
+          {instructions.length > 0 ? (
+            instructions.map((instruction: Instruction, index: number) => (
+              <div key={index} className="mb-8 w-full max-w-full overflow-hidden">
+                <div ref={(el) => (diagramRefs.current[index] = el)} className="w-full h-full overflow-hidden"></div>
+              </div>
+            ))
+          ) : (
+            <p className="text-center text-gray-500">No instructions available</p>
+          )}
         </div>
       </CardContent>
     </Card>

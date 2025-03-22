@@ -54,7 +54,7 @@ export default function Home() {
             </TabsContent>
 
             <TabsContent value="states" className="space-y-4">
-                <StateView />
+                {idlData.acccounts ?<StateView /> : "There is not state in this IDL"}
             </TabsContent>
 
             <TabsContent value="instructions" className="space-y-4">
