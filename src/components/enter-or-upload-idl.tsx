@@ -68,7 +68,7 @@ export default function EnterOrUploadIDL() {
           >
             ✨ Solana Grimoire 🌸
           </h1>
-          <Input
+          {/* <Input
             type="text"
             placeholder="Enter Program ID"
             value={programId}
@@ -96,7 +96,7 @@ export default function EnterOrUploadIDL() {
               <SelectItem value="Localnet">Localnet</SelectItem>
 
             </SelectContent>
-          </Select>
+          </Select> */}
           <p className="text-center text-purple-600">Or</p>
           <label
             className={`flex items-center gap-3 p-4 border-2 border-dashed rounded-lg cursor-pointer hover:scale-105 transition-all shadow-lg ${
@@ -111,13 +111,13 @@ export default function EnterOrUploadIDL() {
             </span>
             <input type="file" accept=".json" onChange={handleFileUpload} className="hidden" />
           </label>
-          <Button
+          {/* <Button
             className={`text-lg font-semibold rounded-lg p-3 shadow-lg transition-all duration-300 ${
               darkMode ? "bg-purple-600 hover:bg-purple-700" : "bg-purple-500 hover:bg-purple-600"
             }`}
           >
             Submit
-          </Button>
+          </Button> */}
         </CardContent>
       </Card>
 
