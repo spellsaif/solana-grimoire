@@ -4,11 +4,11 @@ import { useEffect, useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useIDLStore } from "@/store/idl-store"
 import InstructionsViewTab from "@/components/instruction-view-tab"
-import OverviewDiagram from "@/components/overview-diagram"
 import StateView from "@/components/state-view"
 import ProgramsView from "@/components/programs"
 import { useRouter } from "next/navigation"
 import ERDiagram from "@/components/er-diagram"
+import Link from "next/link"
 
 
 export default function Home() {
@@ -31,7 +31,7 @@ export default function Home() {
         <div className="container mx-auto py-6 px-4 sm:px-6">
           <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
             <div>
-              <h1 className="text-3xl text-purple-600 font-bold tracking-tight">✨ Solana Grimoire 🌸</h1>
+              <h1 className="text-3xl text-purple-600 font-bold tracking-tight"><Link href="/">✨ Solana Grimoire 🌸</Link></h1>
               <p className="text-black mt-1 ml-12">
                 {idlData.name}
               </p>

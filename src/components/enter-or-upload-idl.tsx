@@ -1,21 +1,18 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Select, SelectTrigger, SelectContent, SelectItem } from "@/components/ui/select";
 import { UploadCloud, Moon, Sun } from "lucide-react";
 
 import {parseIDL} from "@/lib/parse-idl"
 import { useIDLStore } from "@/store/idl-store";
 import { useRouter } from "next/navigation";
 
-type ConnectionType = 'Devnet' | 'Mainnet' | 'Localnet';
+// type ConnectionType = 'Devnet' | 'Mainnet' | 'Localnet';
 
 export default function EnterOrUploadIDL() {
-  const [programId, setProgramId] = useState("");
-  const [connection, setConnection] = useState<ConnectionType>("Devnet");
+  // const [programId, setProgramId] = useState("");
+  // const [connection, setConnection] = useState<ConnectionType>("Devnet");
   const [darkMode, setDarkMode] = useState(false);
 
   const setIdlData = useIDLStore((state) => state.setIdlData);
